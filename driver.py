@@ -17,19 +17,20 @@ def run_job(klass, input_file, output_file):
       file.write(line)
     file.close()
 
-# Make sure we got proper arguments.
-if len(argv) < 3 or len(argv) > 5:
-  exit("Usage: python driver.py " + \
-  "[input file] [output file] [options]")
+if __name__ == '__main__':
+  # Make sure we got proper arguments.
+  if len(argv) < 3 or len(argv) > 5:
+    exit("Usage: python driver.py " + \
+    "[input file] [output file] [options]")
 
-# Determine if we're running locally or on EMR.
-LOCAL = not (len(argv) > 3 and argv[3] == '-emr')
+  # Determine if we're running locally or on EMR.
+  LOCAL = not (len(argv) > 3 and argv[3] == '-emr')
 
-# Output all logging information to STDOUT.
-MRJob.set_up_logging(verbose=True, stream=stdout)
+  # Output all logging information to STDOUT.
+  MRJob.set_up_logging(verbose=True, stream=stdout)
 
-# Run all the MapReduce workers sequentially.
-run_job(wordFrequency, argv[1], 'frequencies.txt')
-run_job(wordCount, 'frequencies.txt', 'counts.txt')
-run_job(corpusFrequency, 'counts.txt', 'corpus.txt')
-run_job(calculateScore, 'corpus.txt', argv[2])
+  # Run all the MapReduce workers sequentially.
+  run_job(wordFrequency, argv[1], 'frequencies.txt')
+  run_job(wordCount, 'frequencies.txt', 'counts.txt')
+  run_job(corpusFrequency, 'counts.txt', 'corpus.txt')
+  run_job(calculateScore, 'corpus.txt', argv[2])
