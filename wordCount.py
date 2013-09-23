@@ -14,11 +14,6 @@ class wordCount(MRJob):
     for i_word_n in i_word_ns:
       i, word, n = i_word_n
       N += n
-      for i_word_n2 in i_word_ns:
-        i2, word2, n2 = i_word_n2
-        if n == n2 and word2 == word:
-          try: S[i2] += 1
-          except: S[i2] = 1
     for i_word_n in i_word_ns:
       i, word, n = i_word_n
       yield (word, doc, i), (n, N)
